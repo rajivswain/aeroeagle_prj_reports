@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Aero Eagle Prayagraj Reports</title>
+
+<style>
+
+body{
+  font-family:Arial, sans-serif;
+  background:#f5f5f5;
+  text-align:center;
+  padding-top:100px;
+}
+
+.container{
+  background:white;
+  padding:30px 40px;
+  border-radius:10px;
+  display:inline-block;
+  box-shadow:0 0 10px rgba(0,0,0,0.15);
+}
+
+.input-wrap{
+  position:relative;
+  display:inline-block;
+}
+
+input{
+  padding:10px;
+  width:220px;
+  font-size:16px;
+  letter-spacing:3px;
+}
+
+.eye{
+  position:absolute;
+  right:10px;
+  top:10px;
+  cursor:pointer;
+}
+
+button{
+  padding:10px 20px;
+  margin-top:15px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:15px;
+  font-size:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2 id="title">Loading Report...</h2>
+
+<div id="message">Enter Password</div>
+
+<br>
+
+<div class="input-wrap">
+<input type="password" id="password" placeholder="Password">
+<span class="eye" onclick="togglePassword()">👁</span>
+</div>
+
+<br>
+
+<button onclick="checkPassword()">Open Report</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+
+<script>
+
+// ================= REPORT DATABASE =================
+
+const REPORTS = {
+
+  "dailyreport":{
+    title:"Aero Eagle Prayagraj – Daily Report",
+    link:"https://1drv.ms/x/c/bccc0999596dc156/IQBHOK6GqW8_SoMFQkwjOT0zAQFEP2JOPU_XBiK6mOGGCdU",
+    password:"ae@123"
+  },
+
+  "dailyinspection":{
+    title:"Aero Eagle Prayagraj – Daily Inspection Report",
+    link:"https://1drv.ms/x/c/bccc0999596dc156/IQBAGGR50zOHTo_y9tr8OcgtAc_ORVlB0vnzbejGwZKjS6k",
+    password:"ae@123"
+  },
+
+  "tendays":{
+    title:"Aero Eagle Prayagraj – 10 Days Maintenance Report",
+    link:"https://1drv.ms/x/c/bccc0999596dc156/IQDHcHdW5QrpQo4TfeM6YZl1ARVwKgSEchmVcBVtVyU7bno",
+    password:"ae@123"
+  },
+
+  "air":{
+    title:"Aero Eagle Prayagraj – Accident Investigation Report",
+    link:"https://1drv.ms/x/c/bccc0999596dc156/IQD7fiDA8mXLRpnpFP03yS9GAWdoWChzWy7w6NvIyhm8AnY",
+    password:"ae@123"
+  },
+
+  "hvsystem":{
+    title:"Aero Eagle Prayagraj – HV System Inspection Report",
+    link:"https://1drv.ms/x/c/bccc0999596dc156/IQDEmcyaicP1ToHP9o9cxxS6Afvyzg5wS1kKpNAdceZQGcU",
+    password:"ae@123"
+  },
+
+  "ae.dailyreport":{
+    title:"Aero Eagle Prayagraj – Daily Report",
+    link:"https://1drv.ms/x/c/bccc0999596dc156/IQBHOK6GqW8_SoMFQkwjOT0zATu9gRL0rox4GbQPIIqkTHs",
+    password:"ae@321"
+  },
+
+  "ae.dailyinspection":{
+    title:"Aero Eagle Prayagraj – Daily Inspection",
+    link:"https://1drv.ms/x/c/bccc0999596dc156/IQBAGGR50zOHTo_y9tr8OcgtAXqWJq8CaJzo7kkKb2OsDbM",
+    password:"ae@321"
+  },
+
+  "ae.tendays":{
+    title:"Aero Eagle Prayagraj – 10 Days Maintenance",
+    link:"https://1drv.ms/x/c/bccc0999596dc156/IQDHcHdW5QrpQo4TfeM6YZl1AUgQc-lpAXup2qJYyQSIXBA",
+    password:"ae@321"
+  },
+
+  "ae.air":{
+    title:"Aero Eagle Prayagraj – Accident Investigation",
+    link:"https://1drv.ms/x/c/bccc0999596dc156/IQD7fiDA8mXLRpnpFP03yS9GAfHVcgDAhkxOVk852IBrXbU",
+    password:"ae@321"
+  },
+
+  "ae.hvsystem":{
+    title:"Aero Eagle Prayagraj – HV System Inspection",
+    link:"https://1drv.ms/x/c/bccc0999596dc156/IQDEmcyaicP1ToHP9o9cxxS6Aadw3bOyZJPTvJuXewX2MSY",
+    password:"ae@321"
+  }
+
+};
+
+
+// ================= GET REPORT KEY =================
+
+const params = new URLSearchParams(window.location.search);
+const key = params.get("r");
+
+
+// ================= PAGE VALIDATION =================
+
+if(!key){
+
+document.getElementById("title").innerHTML="No report specified";
+document.getElementById("password").style.display="none";
+document.querySelector("button").style.display="none";
+
+}
+else if(!REPORTS[key]){
+
+document.getElementById("title").innerHTML="Invalid report link";
+document.getElementById("password").style.display="none";
+document.querySelector("button").style.display="none";
+
+}
+else{
+
+document.getElementById("title").innerText = REPORTS[key].title;
+document.title = REPORTS[key].title;
+
+}
+
+
+// ================= PASSWORD CHECK =================
+
+function checkPassword(){
+
+let entered=document.getElementById("password").value;
+
+if(entered===REPORTS[key].password){
+
+document.getElementById("result").innerHTML="✔ Access Granted";
+
+setTimeout(function(){
+
+window.location.replace(REPORTS[key].link);
+
+},800);
+
+}
+else{
+
+document.getElementById("result").innerHTML="✖ Wrong Password";
+
+}
+
+}
+
+
+// ================= SHOW / HIDE PASSWORD =================
+
+function togglePassword(){
+
+let field=document.getElementById("password");
+
+field.type = field.type === "password" ? "text" : "password";
+
+}
+
+
+// ================= ENTER KEY SUPPORT =================
+
+document.getElementById("password").addEventListener("keypress",function(e){
+
+if(e.key==="Enter"){
+checkPassword();
+}
+
+});
+
+</script>
+
+</body>
+</html>
